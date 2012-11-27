@@ -1,0 +1,28 @@
+hardstatus alwayslastline
+hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+autodetach on # Autodetach session on hangup instead of terminating screen completely
+
+defscrollback 30000 # Use a 30000-line scrollback buffer
+# Turn off that annoying start up message
+startup_message off
+ 
+escape ``
+
+#The scroll buffer of GNU Screen can be accessed with C-a [. However, this is very inconvenient. To use the scroll bar of e.g. xterm or konsole, add the following line to ~/.screenrc:
+
+termcapinfo xterm* ti@:te@
+
+# Turn the even more annoying whole-screen-flash-on-tab-complete "feature"
+vbell off
+
+# http://danfm.ca/2011/07/19/the-sweetest-screenrc-hack-ever.html
+shelltitle '\] |bash'
+
+# http://superuser.com/questions/291907/using-screenrc-how-can-i-make-c-a-c-open-a-new-window-at-the-current-windows
+bind c stuff "screen -X chdir \$PWD; screen^M"
+
+# http://www.linuxquestions.org/questions/linux-general-1/screen-screenrc-how-to-use-the-right-ctrl-arrow-to-go-left-and-right-in-windows-764511/
+# for shift UP and DOWN arrows
+bindkey ^[[1;5A prev
+bindkey ^[[1;5B next
+
