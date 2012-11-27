@@ -1,0 +1,362 @@
+" vimrc 
+" Maintainer:   Silvano Galliani aka kysucix <kysucix@dyne.org>
+" First Change:  around 2001
+" Last Change:  2012 Oct 29
+" Usage: copy it to
+"     for Unix and OS/2:  ~/.vimrc
+"         for Amiga:  s:.vimrc
+"         for MS-DOS and Win32:  $VIM\_vimrc
+"         for OpenVMS:  sys$login:.vimrc
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" To be more clear I've (almost) always used verbose version of option name (not the compact
+" one). 
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"					 GENERAL                                                "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+	" Use pathogen to easily modify the runtime path to include all
+	" plugins under the ~/.vim/bundle directory
+	" Force loading as specified by http://blog.darevay.com/2010/10/a-brief-note-on-pathogen-for-vim/
+	call pathogen#runtime_append_all_bundles()
+	filetype off
+	syntax on
+	filetype plugin indent on
+
+	runtime vimrc_example.vim  " needed to jump back to last known position in the file
+	runtime macros/matchit.vim  " match html tag and if/fi
+"	runtime plugin/taglist.vim
+	set nocompatible " Not compatibile with old vi
+	behave xterm " Set behavior for mouse and selection.
+	if version >= 600 " Stuff which is only possible in vim 6..
+	     filetype plugin on
+	     filetype plugin indent on
+	     filetype indent on
+	     nmap ,e :Ex<CR> " Mapping for explorer.vim, a standard plugin in vim 6
+	endif
+	set history=1000      " keep 1000 lines of command line history
+	set cf " Read the error file and jump to the first error
+	set clipboard+=unnamed " yank and copy to X clipboard! :)
+	set viminfo=%,:20,<20,@20,/20,'50,\"100,n~/.vim/viminfo " the viminfo file is read upon startup and written when exiting Vim
+"	set iskeyword+=-,$,@ " none of these should be word dividers, so make them not be 
+	set iskeyword-=- " minus should not be a word divider
+	set confirm " if you :q with changes it asks you if you want to continue or not
+	set ttimeoutlen=100 " 100 milliseconds for escape timeout instead of 1000
+	
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"					 COLORS                                                 "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+	syntax on " Show colors
+	set background=dark
+	" Different Color schemes
+	"colors ir_black
+	"colors darkblue
+	"colors default
+"	colors desert
+"	colorscheme solarized
+	"colors elflord
+	"colors evening
+	"colors koehler
+	"colors morning
+	"colors murphy
+	"colors pablo
+	"colors peachpuff
+	"colors ron
+	"colors shine
+	"colors torte
+	"colors zellner
+	setlocal comments-=://
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"					 VIM UI                                                 "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" {
+	set linespace=0 " Number of pixel lines inserted between characters
+	set ruler       " show the cursor position all the time
+	" Height of the command bar
+	set cmdheight=2
+	set cursorline
+"	highlight cursorline guibg=#cccccc " highlight the cursor line
+"	highlight CursorColumn guibg=#cccccc "highlight the cursor line
+	set cmdheight=1 " Number of screen lines to use for the command-line.
+	set lazyredraw " do not redraw while running macros (much faster)
+	set magic " For regular expressions turn magic on
+	set backspace=indent,eol,start " allow backspacing over everything in insert mode
+	set whichwrap+=<,>,h,l  " backspace and cursor keys wrap to
+	set showcmd     " display incomplete commands down to the bottom
+	set mouse=a " use mouse
+	set mousemodel=popup          " right mouse button pops up a menu in the GUI
+	let &guicursor = &guicursor . ",a:blinkon0"
+"	set hidden " Lets you change buffer without saving ;)
+	set fillchars=vert:\ ,stl:\ ,stlnc:\ " select splitter rendering 
+	set clipboard+=unnamed " share clipboard with windows clipboard
+"	set shortmess=atl
+	set shortmess+=filmnrxoOtT " abbrev. of messages (avoids 'hit enter')
+"}
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"					 VISUAL CLUES                                           "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+	set showmatch " When a bracket is inserted, briefly jump to the matching one.
+	set matchtime=5 " How many tenths of a second to blink when matching brackets
+	set smartindent " braces affect autoindentation
+	set cinkeys +=; " figure out indent when ; is pressed
+	set shiftround " < and > will hit indentation levels instead of always -4/+4
+	set scrolloff=4 " Minimal number of screen lines to keep above and below the cursor.
+	set scrolljump=4 " Minimal number of screen lines to keep above and below the cursor.
+	set gdefault " set /g by default on :s substitutions
+	set noerrorbells        " no freaking error bells
+	set autoread " Reload files changed outside vim
+	set novisualbell " visual is way too flashy!
+"	set statusline=%F%m%r%h%w\ buffer\ %n\ [pos\ %04l,%04v][%p%%]\ [type\ %Y]
+	if has('statusline')
+	    set laststatus=2
+	    " Broken down into easily includeable segments
+	    set statusline=%<%f\ 
+	    set statusline+=%w%h%m%r " Options
+"	    set statusline+=%{fugitive#statusline()} " Git Hotness
+"	    set statusline+=\ [%{&ff}/%Y] " filetype
+	    set statusline+=\ [%{getcwd()}] " current dir
+	    "set statusline+=\ [A=\%03.3b/H=\%02.2B] " ASCII / Hexadecimal value of char
+	    set statusline+=%=%-14.(%l,%c%V%)\ %p%% " Right aligned file nav info
+	endif
+
+
+	"set smarttab "When on, a <Tab> in front of a line inserts blanks according to
+		         " shiftwidth'.  'tabstop' is used in other places.
+	set shiftwidth=4 " Number of spaces to use for each step of (auto)indent.
+	"set softtabstop=4 " Number of spaces that a <Tab> counts for while performing editing  operations,like inserting a <Tab> or using <BS>.
+	"set tabstop=4 "Number of spaces that a <Tab> in the file counts for. (Bad 4 Makefiles!)
+	" set expandtab
+	set complete=.,b,u,w,t,i,d " buffers used for loop in autocompletion
+
+	" Go wild! :)
+	set wildmenu " When 'wildmenu' is on, command-line completion operates in an enhanced mode.
+	set wildmode=full " Completion mode that is used for the character specified with  'wildchar'.
+	set wildchar=<TAB> " Character you have to type to start wildcard expansion in the command-line
+	set wildignore=*.o,*~,*.bak,.git\*,.hg\*,.svn\* " Tab complete now ignores these
+	set suffixes=.~,.bak,.class,.o,.aux,.bak,.dvi,.idx,.log,.ps,.swp,.tar " Ignore filename with any of these suffixes when using the :edit command.
+	set showmode " If in Insert, Replace or Visual mode put a message on the last line.
+	set showfulltag
+	set wrap " Lines longer than the width of the window will wrap and displaying continues on the next line.
+	set nolist " Show tabs as CTRL-I, show end of line with $
+	set terse " Add 's' flag to 'shortmess' option
+	set verbose=0 " When bigger than zero, Vim will give messages about what it is doing.
+	set undofile
+	set undolevels=1000 " Maximum number of changes that can be undone.
+	set undoreload=1000 " Maximum number of changes that can be undone.
+	set updatecount=200  " write swap file to disk after each 200 characters
+	set updatetime=6000  " write swap file to disk after 5 inactive seconds
+	set foldenable " Enable folding
+	set foldcolumn=1 " left margin
+	set formatoptions -=c " Auto-wrap comments using textwidth, inserting the current comment
+	set nojoinspaces " ???
+	set langmenu=en " No comment ;)
+	set comments=sl:/*,mb:**,elx:* " Format Comment
+	set title " Show title in xterm window
+	set ttyfast " Improves smoothness of redrawing by assuming a fast connection
+	set ttyscroll=999 " turn off scrolling -> faster!
+	set icon " the icon text of the window will be set to the value of the name of the file
+	set fileformat=unix     " unix file format
+	"autocmd BufEnter * let %titlestring=expand("%:p:~")
+	" Per il tasto K (cercare nel man la parola sul cursore)
+	"set keywordprg=man\ -s " Program to use for the |K| command
+	"set listchars=tab:>>.
+	"set listchars+=trail:.
+	" set statusline=Vim-%{(Version())} [%02n]\ %(%M%R%H%)\ %F\ %=<%l,%c%V>\ %P
+	set autoindent   " new line has indentation equal to previous line
+	set nostartofline " keep the horizontal cursor position when moving vertically
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"					 BACKUP                                                 "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+	set writebackup " yes, make a backup before overwriting a file
+	set backup        " keep a backup file
+	set backupdir=~/.vim/backupfiles/   " backup dir
+	set directory=~/.vim/temp/ " directory is the directory for temp file (e. g. annoying swap files )
+
+	" create ~/.vim/backupfiles/ if it doesn't exist.
+	if has("unix")
+	     if !isdirectory(expand("~/.vim/backupfiles/."))
+		  !mkdir -p ~/.vim/backupfiles/
+	     endif
+	     if !isdirectory(expand("~/.vim/temp/."))
+		  !mkdir -p ~/.vim/temp/
+	     endif
+	endif
+	set backupext=~         " backup extension
+	set makeef=vim.err
+	set report=0 " show a report when N lines were changed. report=0 thus means show all changes
+	set shell=/bin/bash " Name of the shell to use for ! and :! commands.
+"	set path=.,src/*,src/,src/include/,/usr/local/include/,/usr/local/include/*,/usr/include/,/usr/include/*,, " This is a list of directories which will be searched when using the |gf|, [f, ]f, ^Wf, |:find| and other commands
+	set path=.,src/*,src/,src/include/,, " This is a list of directories which will be searched when using the |gf|, [f, ]f, ^Wf, |:find| and other commands
+	set noterse " show search message when wrapping around
+	"   t_vb:  terminal's visual bell - turned off to make Vim quiet
+	"set t_vb=
+	"set incsearch       " do incremental searching -> *annoying!*
+	set smartcase		" ignore case when pattern has at least one upper case character
+	setlocal omnifunc=syntaxcomplete#Complete " turn on omnicompletion for every file type known
+	set dictionary+=/usr/share/dict/words " add the dictionary to tab completion
+	set completeopt-=preview " remove unuseful preview window
+	set completeopt+=menuone " use the menu also with one match
+	set completeopt+=longest " add as many information as possible
+	"	If you want to complete system functions you can do something like this.  Use
+	"ctags to generate a tags file for all the system header files: >
+	"	% ctags -R -f ~/.vim/systags /usr/include /usr/local/include
+	"In your vimrc file add this tags file to the 'tags' option: >
+	set tags+=~/.vim/systags
+	set tags+='./.tags,.tags' " add .tags files
+"	set tags+='./../tags,../tags,./../.tags,../.tags' " look in the level above
+"
+	" Map K to Man ftplugin
+	" source: http://nilisnotnull.blogspot.de/2011/10/browsing-man-pages-in-vim.html
+	let $GROFF_NO_SGR=1
+	source $VIMRUNTIME/ftplugin/man.vim
+	nmap K :Man <cword><CR>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"					 AUTOCOMMAND                                            "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    "c sources
+"		autocmd BufRead *.c set omnifunc=ccomplete#Complete
+    "		
+    " Octave syntax
+    augroup filetypedetect
+    au! BufRead,BufNewFile *.m,*.oct set filetype=octave
+    augroup END
+
+    " Folding stuff
+    autocmd BufNewFile,BufRead   *           syn sync fromstart
+    autocmd BufNewFile,BufRead   *           set foldmethod=manual
+    set foldlevel=99
+
+"		:autocmd BufAdd,BufNewFile * nested tab sball " tab stuff
+
+    nnoremap <leader>l :TagbarToggle<CR>
+    nnoremap ; :
+    nnoremap ; :
+    
+    " f7 toggles spelling on/off
+    nn <F7> :setlocal spell! spell?<CR>
+
+" With the following in your vimrc, you can press Tab to return to normal mode:
+" http://vim.wikia.com/wiki/Avoid_the_escape_key#Using_the_Tab_key
+
+    nnoremap <Tab> <Esc>
+    vnoremap <Tab> <Esc>gV
+    onoremap <Tab> <Esc>
+    inoremap <Tab> <Esc>`^
+    inoremap <Leader><Tab> <Tab>
+
+    " change the mapleader from \ to ,
+    let mapleader = "," " 
+    let g:mapleader = ","
+   
+    " @c comment, @u uncomment, @p print function name
+    " https://opensource.conformal.com/wiki/vim
+    let @u='0xx$xx^['
+    let @c='I/*^[A*/^['
+    let @p='ofprintf(stderr, "%s\n", __func__);^['
+
+    " Remap ` to ' to go back to the exact character specified on previous
+    " mark not just the line
+    " http://items.sjbach.com/329/configuring-vim-right
+    nnoremap ` '
+
+
+    "----------SOURCE
+
+    let g:miniBufExplMapCTabSwitchBufs = 1 
+    "----------MAPPING
+    "	highlight   Pmenu               ctermfg=0 ctermbg=2 gui=NONE
+    "	highlight   PmenuSel            ctermfg=0 ctermbg=7 gui=NONE
+    "	highlight   PmenuSbar           ctermfg=7 ctermbg=0 gui=NONE
+    "	highlight   PmenuThumb          ctermfg=0 ctermbg=7 gui=NONE
+    "	highlight PMenu      gui=bold guibg=LightSkyBlue4 guifg=honeydew2
+    "	highlight PMenuSel   gui=bold guibg=DarkGreen guifg=honeydew2
+    "	highlight PMenuSbar  gui=bold guibg=LightSkyBlue4
+    "	highlight PMenuThumb gui=bold guibg=DarkGreen
+    "	highlight SpellBad   gui=undercurl guisp=Red
+    "	highlight SpellRare  gui=undercurl guisp=Orange
+    "	highlight SpellLocal gui=undercurl guisp=Orange
+    "	highlight SpellCap   gui=undercurl guisp=Yellow
+    :imap <F2> <CR>Date: <Esc>:read !date<CR>kJ
+    imap <C-Space> <C-x><C-o> 
+    " I also have 2 tweaks in my .vimrc so you can use CTRL+LeftArrow and CTRL+RightArrow to move between the files with more natural key bindings.
+    map <silent><C-Left> <C-T>
+    map <silent><C-Right> <C-]>
+    inoremap <Nul> <C-x><C-o>
+    " map :w to :W, typical typo
+    nmap :W :w
+    " Quickly edit/reload the vimrc file
+    nmap <silent> <leader>ev :e $MYVIMRC<CR>
+    nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
+    " For when you forget to sudo.. Really Write the file.
+    cmap w!! w !sudo tee % >/dev/null
+    nmap <silent> <leader>n :silent :nohlsearch<CR>
+
+    " Copy Function Declaration from a header file into the implementation file.
+    "nmap <F5> "lYml[[kw"cye'l
+    "nmap <F6> ma:let @n=@/<cr>"lp==:s/\<virtual\>/\/\*&\*\//e<cr>:s/\<static\>/\/\*&\*\//e<cr>:s/\s*=\s*0\s*//e<cr>:s/(.\{-}\zs=\s*[^,)]\{-1,}\>\ze\(\*\/\)\@!.*)/\/\*&\*\//e<cr>:s/(.\{-}\zs=\s*[^,)]\{-1,}\>\ze\(\*\/\)\@!.*)/\/\*&\*\//e<cr>:s/(.\{-}\zs=\s*[^,)]\{-1,}\>\ze\(\*\/\)\@!.*)/\/\*&\*\//e<cr>:let @/=@n<cr>'ajf(b"cPa::<esc>f;s<cr>{<cr>}<cr><esc>kk
+
+
+    " tab navigation (next tab or next buffer) (firefox style)
+    nmap <C-left> :tabprevious<CR>
+    nmap <C-right> :tabnext<CR>
+
+
+    " tab navigation (next tab or next buffer) with alt left / alt right
+    "map <silent><A-Right> :if g:toggleTabs == 1<CR>:tabnext<CR>:else<CR>:bn<CR>:endif<CR>
+    "map <silent><A-Left> :if g:toggleTabs == 1<CR>:tabprevious<CR>:else<CR>:bp<CR>:endif<CR>
+    "
+
+
+
+    """"""""""""""""""""""""""""""
+    " => Visual mode related
+    """"""""""""""""""""""""""""""
+    " Visual mode pressing * or # searches for the current selection
+    " Super useful! From an idea by Michael Naumann
+    " source  https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim
+    vnoremap <silent> * :call VisualSelection('f', '')<CR>
+    vnoremap <silent> # :call VisualSelection('b', '')<CR>
+
+    " Remap VIM 0 to first non-blank character
+    map 0 ^
+
+
+
+    """"""""""""""""""""""""""""""
+    " => Tab mapping
+    """"""""""""""""""""""""""""""
+    " Useful mappings for managing tabs and windows
+    " source https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim
+    map <leader>tn :tabnew<cr>
+    map <leader>to :tabonly<cr>
+    map <leader>tc :tabclose<cr>
+    map <leader>tm :tabmove
+    " Open all buffers in new tabs
+    map <leader>ts :tab sball<cr> 
+    map <leader>tb :tab sball<cr> 
+    map <leader>t<leader> :tabnext<cr>
+
+    " Useful mappings for managing and windows
+    " My modification of previous mapping for windows
+    map <leader>wn :new<cr>
+    map <leader>wc :close<cr>
+
+    " tab navigation like firefox
+    nmap <C-pagedown> :tabnext<cr>
+    nmap <C-pageup> :tabprevious<cr>
+    map <C-S-tab> :tabprevious<cr>
+    map <C-tab> :tabnext<cr>
+    imap <C-S-tab> <ESC>:tabprevious<cr>i
+    "	imap <C-tab> <ESC>:tabnext<cr>i
+    "	nmap <C-t> :tabnew<cr>
+    "	imap <C-t> <ESC>:tabnew<cr>
+    "	map <C-w> :tabclose<cr>
+    "	imap <C-w> <ESC>:tabclose<cr>
+
+
