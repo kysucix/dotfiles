@@ -10,7 +10,7 @@ set tabstop=4
 set softtabstop=4 " Number of spaces that a <Tab> counts for while performing editing  operations,like inserting a <Tab> or using <BS>.
 set expandtab
 set foldmethod=syntax
-set iskeyword+=-,$,@ " none of these should be word dividers, so make them not be 
+set iskeyword+=$,@ " none of these should be word dividers, so make them not be 
 syn region myFold start="{" end="}" transparent fold
 
 " Abbreviations when writing C/C++ code
