@@ -270,11 +270,17 @@ nmap K :Man <cword><CR>
 
     " Quickly edit/reload the vimrc file
     nmap <leader>ev :e $MYVIMRC<CR>
-    nmap <leader>sv :so $MYVIMRC<CR>:set background=light<CR>
+    nmap <leader>sv :so $MYVIMRC<CR>
 
     " For when you forget to sudo.. Really Write the file.
     cmap w!! w !sudo tee % >/dev/null
     nmap <leader>n :silent :nohlsearch<CR>
+
+    " Bash like keys for the command line
+    " source: https://github.com/amix/vimrc/blob/master/vimrcs/extended.vim
+    cnoremap <C-A>	<Home>
+    cnoremap <C-E>	<End>
+    cnoremap <C-K>	<C-U>
 
 
     """"""""""""""""""""""""""""""
