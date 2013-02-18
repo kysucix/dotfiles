@@ -301,14 +301,17 @@ nmap K :Man <cword><CR>
     " makes CTRL-q quit.
     nnoremap <C-q> :q<CR>
 
+    map <leader>q :q<cr>
+
+    " remap jj to esc
+    imap jj <Esc>
+
 
     """"""""""""""""""""""""""""""
     " => Tab mapping
     """"""""""""""""""""""""""""""
     " { START
 
-        " remap jj to esc
-        imap jj <Esc>
 
         " tab navigation (next tab or next buffer) (firefox style)
         nmap <C-left> :tabprevious<CR>
@@ -320,6 +323,7 @@ nmap K :Man <cword><CR>
         map <leader>to :tabonly<cr>
         map <leader>tc :tabclose<cr>
         map <leader>tm :tabmove
+        map <leader>te :tabedit 
 
         " Open all buffers in new tabs
         map <leader>ts :tab sball<cr> 
