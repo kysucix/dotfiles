@@ -18,8 +18,9 @@
 " Use pathogen to easily modify the runtime path to include all
 " plugins under the ~/.vim/bundle directory
 " Force loading as specified by http://blog.darevay.com/2010/10/a-brief-note-on-pathogen-for-vim/
-call pathogen#runtime_append_all_bundles()
-Helptags
+" silent tip comes from http://blog.sanctum.geek.nz/gracefully-degrading-vimrc/
+silent! call pathogen#runtime_append_all_bundles()
+silent! Helptags
 filetype off
 syntax on
 filetype plugin indent on
@@ -147,6 +148,7 @@ set nolist " Show tabs as CTRL-I, show end of line with $
 set verbose=0 " When bigger than zero, Vim will give messages about what it is doing.
 set updatecount=200  " write swap file to disk after each 200 characters
 set updatetime=5000  " write swap file to disk after 5 inactive seconds
+set gdefault " Adds g to every substitute command
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "					 FOLDING                                                 "
@@ -310,6 +312,18 @@ nmap K :Man <cword><CR>
     imap jj <Esc>
 
 
+
+    "tips via http://blog.sanctum.geek.nz/vim-annoyances/
+    "If you want to keep the cursor in place when you join lines with J, you can do this, dropping a mark before the operation to which you return afterwards:
+
+    nnoremap J mzJ`z
+
+    " Center window when searching
+    nnoremap n nzz
+    nnoremap } }zz
+
+
+
     """"""""""""""""""""""""""""""
     " => Tab mapping
     """"""""""""""""""""""""""""""
@@ -351,5 +365,12 @@ nmap K :Man <cword><CR>
 
 " } END
 
+
+" Configuratio for taglist
+if filereadable("$HOME/bin/ctags")
+    let Tlist_Ctags_Cmd = '$HOME/bin/ctags'
+    " Configuratio for tagmenu
+    let Tmenu_ctags_cmd = '$HOME/bin/ctags'
+endif
 
 let g:miniBufExplMapCTabSwitchBufs = 1 
