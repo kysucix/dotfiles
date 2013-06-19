@@ -47,6 +47,8 @@ set iskeyword-=- " minus should not be a word divider
 set confirm " if you :q with changes it asks you if you want to continue or not
 set ttimeoutlen=100 " 100 milliseconds for escape timeout instead of 1000
 
+let g:tex_flavor='latex'
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "					 COLORS                                                 "
@@ -97,6 +99,7 @@ setlocal comments-=://
     set clipboard+=unnamed " share clipboard with windows clipboard
     "	set shortmess=atl
     set shortmess+=filmnrxoOtT " abbrev. of messages (avoids 'hit enter')
+    let g:netrw_silent = 1
 "} END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "					 VISUAL CLUES                                           "
@@ -311,16 +314,14 @@ nmap K :Man <cword><CR>
     " remap jj to esc
     imap jj <Esc>
 
-
-
     "tips via http://blog.sanctum.geek.nz/vim-annoyances/
     "If you want to keep the cursor in place when you join lines with J, you can do this, dropping a mark before the operation to which you return afterwards:
-
     nnoremap J mzJ`z
 
     " Center window when searching
-    nnoremap n nzz
-    nnoremap } }zz
+    " (disabled because it's annoying)
+    "nnoremap n nzz
+    "nnoremap } }zz
 
 
 
@@ -367,10 +368,59 @@ nmap K :Man <cword><CR>
 
 
 " Configuratio for taglist
-if filereadable("$HOME/bin/ctags")
+let Tlist_Ctags_Cmd = '$HOME/bin/ctags'
+let Tmenu_ctags_cmd = '$HOME/bin/ctags'
+let g:tagbar_ctags_bin = '$HOME/bin/ctags'
+if filereadable("~/bin/ctags") " TODO FIX
+    let g:tagbar_ctags_bin = '$HOME/bin/ctags'
     let Tlist_Ctags_Cmd = '$HOME/bin/ctags'
     " Configuratio for tagmenu
     let Tmenu_ctags_cmd = '$HOME/bin/ctags'
 endif
+nmap <F8> :TagbarToggle<CR>
 
 let g:miniBufExplMapCTabSwitchBufs = 1 
+
+
+
+function! BufSel(pattern)
+  let bufcount = bufnr("$")
+  let currbufnr = 1
+  let nummatches = 0
+  let firstmatchingbufnr = 0
+  while currbufnr <= bufcount
+    if(bufexists(currbufnr))
+      let currbufname = bufname(currbufnr)
+      if(match(currbufname, a:pattern) > -1)
+        echo currbufnr . ": ". bufname(currbufnr)
+        let nummatches += 1
+        let firstmatchingbufnr = currbufnr
+      endif
+    endif
+    let currbufnr = currbufnr + 1
+  endwhile
+  if(nummatches == 1)
+    execute ":buffer ". firstmatchingbufnr
+  elseif(nummatches > 1)
+    let desiredbufnr = input("Enter buffer number: ")
+    if(strlen(desiredbufnr) != 0)
+      execute ":buffer ". desiredbufnr
+    endif
+  else
+    echo "No matching buffers"
+  endif
+endfunction
+
+"Bind the BufSel() function to a user-command
+command! -nargs=1 Bs :call BufSel("<args>")
+
+:nnoremap <F5> :buffers<CR>:buffer<Space>
+
+let g:clang_library_path="/home/gsilvano/lib/"
+let g:clang_user_options="-I/home/gsilvano/include/"
+
+let g:clang_use_library=1
+let g:clang_snippets=1
+let g:clang_snippets_engine="clang_complete"
+
+set pumheight=20 "Determines the maximum number of items to show in the popup menu for Insert mode completion.  When zero as much space as available is used. |ins-completion-menu|.
