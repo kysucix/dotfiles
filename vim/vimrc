@@ -422,6 +422,32 @@ let g:clang_user_options="-I/home/gsilvano/include/"
 let g:clang_use_library=1
 let g:clang_snippets=1
 let g:clang_snippets_engine="clang_complete"
+" Avoid freezing on offending code via http://blog.msoares.pro.br/archives/quick-recipe-to-enable-clang_complete-on-vim
+let g:clang_user_options='|| exit 0'
+let g:clang_close_preview=1
+
+" Tips via https://vtluug.org/wiki/Clang_Complete
+" if there's an error, allow us to see it
+let g:clang_complete_copen=1
+let g:clang_complete_macros=1
+let g:clang_complete_patterns=0
+" Limit memory use
+let g:clang_memory_percent=70
+" Remove -std=c++11 if you don't use C++ for everything like I do.
+let g:clang_user_options=' -std=c++11 || exit 0'
+" Set this to 0 if you don't want autoselect, 1 if you want autohighlight,
+" and 2 if you want autoselect. 0 will make you arrow down to select the first
+" option, 1 will select the first option for you, but won't insert it unless you
+" press enter. 2 will automatically insert what it thinks is right. 1 is the most
+" convenient IMO, and it defaults to 0.
+let g:clang_auto_select=1
+
+set conceallevel=2
+set concealcursor=vin
+let g:clang_snippets=1
+let g:clang_conceal_snippets=1
+" The single one that works with clang_complete
+let g:clang_snippets_engine='clang_complete'
 
 "When using GUI Vim, you can display the tags defined in the current file in a
 "menu named "Tags". By default, this feature is turned off. To turn on this
