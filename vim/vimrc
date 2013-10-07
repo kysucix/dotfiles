@@ -174,7 +174,6 @@ set ttyfast " Improves smoothness of redrawing by assuming a fast connection
 set ttyscroll=999 " turn off scrolling -> faster!
 set icon " the icon text of the window will be set to the value of the name of the file
 set fileformat=unix     " unix file format
-" Per il tasto K (cercare nel man la parola sul cursore)
 "set keywordprg=man\ -s " Program to use for the |K| command
 "set listchars=tab:>>.
 "set listchars+=trail:.
@@ -232,7 +231,10 @@ let $GROFF_NO_SGR=1
 source $VIMRUNTIME/ftplugin/man.vim
 nmap K :Man <cword><CR>
 
-    set pastetoggle=<F2>
+set pastetoggle=<F2>
+set pumheight=20 "Determines the maximum number of items to show in the popup menu for Insert mode completion.  When zero as much space as available is used. |ins-completion-menu|.
+" Open new files from BufExplorer plugin to a new tab
+let g:netrw_browse_split =3
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -240,9 +242,9 @@ nmap K :Man <cword><CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " { START
 " Octave syntax for any *.m program
-    augroup filetypedetect
-    autocmd! BufRead,BufNewFile *.m,*.oct set filetype=octave
-    augroup END
+"    augroup filetypedetect
+"    autocmd! BufRead,BufNewFile *.m,*.oct set filetype=octave
+"    augroup END
 " } END
  
 
@@ -275,6 +277,9 @@ nmap K :Man <cword><CR>
 
     " map :w to :W, typical typo
     nmap :W :w
+
+    " map :qw to :wq, typical typo
+    nmap :qw :wq
 
     " Quickly edit/reload the vimrc file
     nmap <leader>ev :e $MYVIMRC<CR>
@@ -363,21 +368,16 @@ nmap K :Man <cword><CR>
         "	map <C-w> :tabclose<cr>
         "	imap <C-w> <ESC>:tabclose<cr>
     " } END
+    
+    " Switch automatically from c source to its header file
+    nmap ,s :FSHere<CR>
+
+    " F8 open Tagbar window
+    nmap <F8> :TagbarToggle<CR>
 
 " } END
 
 
-" Configuratio for taglist
-let Tlist_Ctags_Cmd = '$HOME/bin/ctags'
-let Tmenu_ctags_cmd = '$HOME/bin/ctags'
-let g:tagbar_ctags_bin = '$HOME/bin/ctags'
-if filereadable("~/bin/ctags") " TODO FIX
-    let g:tagbar_ctags_bin = '$HOME/bin/ctags'
-    let Tlist_Ctags_Cmd = '$HOME/bin/ctags'
-    " Configuratio for tagmenu
-    let Tmenu_ctags_cmd = '$HOME/bin/ctags'
-endif
-nmap <F8> :TagbarToggle<CR>
 
 let g:miniBufExplMapCTabSwitchBufs = 1 
 
@@ -416,11 +416,16 @@ command! -nargs=1 Bs :call BufSel("<args>")
 
 :nnoremap <F5> :buffers<CR>:buffer<Space>
 
-let g:clang_library_path="/home/gsilvano/lib/"
+let g:clang_library_path="/usr/lib/"
 let g:clang_user_options="-I/home/gsilvano/include/"
 
 let g:clang_use_library=1
 let g:clang_snippets=1
 let g:clang_snippets_engine="clang_complete"
 
-set pumheight=20 "Determines the maximum number of items to show in the popup menu for Insert mode completion.  When zero as much space as available is used. |ins-completion-menu|.
+"When using GUI Vim, you can display the tags defined in the current file in a
+"menu named "Tags". By default, this feature is turned off. To turn on this
+"feature, set the 'Tlist_Show_Menu' variable to 1:
+let Tlist_Show_Menu = 1
+
+let g:fsnonewfiles = 1
