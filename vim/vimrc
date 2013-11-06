@@ -15,13 +15,34 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "					 GENERAL                                                "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Use pathogen to easily modify the runtime path to include all
-" plugins under the ~/.vim/bundle directory
-" Force loading as specified by http://blog.darevay.com/2010/10/a-brief-note-on-pathogen-for-vim/
-" silent tip comes from http://blog.sanctum.geek.nz/gracefully-degrading-vimrc/
-silent! call pathogen#runtime_append_all_bundles()
-silent! Helptags
+set nocompatible " Not compatibile with old vi
 filetype off
+" Configure plugins with vundle
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+ " let Vundle manage Vundle
+ " required! 
+ Bundle 'gmarik/vundle'
+
+ " My Bundles here:
+ "
+ " original repos on github
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'vimoutliner/vimoutliner'
+Bundle 'majutsushi/tagbar'
+Bundle 'scrooloose/syntastic'
+"Bundle 'tpope/vim-fugitive'
+"Bundle 'Lokaltog/vim-easymotion'
+"Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+"Bundle 'tpope/vim-rails.git'
+" vim-scripts repos
+"Bundle 'L9'
+"Bundle 'FuzzyFinder'
+" non github repos
+"Bundle 'git://git.wincent.com/command-t.git'
+Bundle 'git://git.code.sf.net/p/vim-latex/vim-latex'
 syntax on
 filetype plugin indent on
 " Force loading of new documentation 
@@ -30,7 +51,6 @@ filetype plugin indent on
 runtime vimrc_example.vim  " needed to jump back to last known position in the file
 runtime macros/matchit.vim  " match html tag and if/fi
 "	runtime plugin/taglist.vim
-set nocompatible " Not compatibile with old vi
 behave xterm " Set behavior for mouse and selection.
 if version >= 600 " Stuff which is only possible in vim 6..
     filetype plugin on
@@ -455,3 +475,5 @@ let g:clang_snippets_engine='clang_complete'
 let Tlist_Show_Menu = 1
 
 let g:fsnonewfiles = 1
+
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
