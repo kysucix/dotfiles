@@ -81,13 +81,22 @@ export PATH=$PATH:~/bin
 
 export EDITOR=vim
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib:$HOME/Downloads/SiftGPU/bin:$HOME/cuda/lib64
-export PATH=$PATH:$HOME/bin:$HOME/cuda/bin
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}$HOME/lib:$HOME/Downloads/SiftGPU/bin:$HOME/cuda/lib64:
+export PATH=$HOME/bin:$HOME/cuda/bin:$PATH:$HOME/matlab/bin
 export PKG_CONFIG_PATH=$HOME/lib/pkgconfig/
 export CFLAGS="-I$HOME/include -I$HOME/cuda/include "
 export CPPFLAGS="-I$HOME/include -I$HOME/cuda/include"
 export LDFLAGS="-L$HOME/lib -L$HOME/cuda/lib64"
 export PKG_CONFIG_PATH=$HOME/lib/pkgconfig
+
+lesspipe
+# https://www.gnu.org/software/bash/manual/bashref.html#The-Shopt-Builtin
+# No need to use cd anymore: just type the directory!
+shopt -s autocd
+shopt -s checkjobs
+shopt -s dirspell
+shopt -s cdspell
+
 #export PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
 #    vim -R -c 'set ft=man nomod nolist' -c 'map q :q<CR>' \
 #    -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
