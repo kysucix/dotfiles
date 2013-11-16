@@ -33,6 +33,8 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'vimoutliner/vimoutliner'
 Bundle 'majutsushi/tagbar'
 Bundle 'scrooloose/syntastic'
+Bundle 'scrooloose/nerdtree'
+Bundle 'tomasr/molokai'
 "Bundle 'tpope/vim-fugitive'
 "Bundle 'Lokaltog/vim-easymotion'
 "Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}

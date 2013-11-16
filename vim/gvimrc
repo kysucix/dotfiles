@@ -67,3 +67,4 @@ endfunction
 
 set guitablabel=%{GuiTabLabel()}
 "set guitablabel=%f
+colorscheme molokai
