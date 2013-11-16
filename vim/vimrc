@@ -397,6 +397,10 @@ let g:netrw_browse_split =3
     " F8 open Tagbar window
     nmap <F8> :TagbarToggle<CR>
 
+    "F12 compile and open error window
+    command -nargs=* Make make <args> | cwindow 3
+    nmap <F12> :Make<CR>|
+
 " } END
 
 
@@ -456,7 +460,7 @@ let g:clang_complete_patterns=0
 " Limit memory use
 let g:clang_memory_percent=70
 " Remove -std=c++11 if you don't use C++ for everything like I do.
-let g:clang_user_options=' -std=c++11 || exit 0'
+"let g:clang_user_options=' -std=c++11 || exit 0'
 " Set this to 0 if you don't want autoselect, 1 if you want autohighlight,
 " and 2 if you want autoselect. 0 will make you arrow down to select the first
 " option, 1 will select the first option for you, but won't insert it unless you
@@ -479,3 +483,4 @@ let Tlist_Show_Menu = 1
 let g:fsnonewfiles = 1
 
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+"let g:ycm_global_ycm_extra_conf = '/home/gsilvano/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
