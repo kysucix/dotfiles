@@ -63,8 +63,10 @@ fi
 
 # some more ls aliases
 alias ll='ls -l'
-#alias la='ls -A'
-#alias l='ls -CF'
+alias la='ls -A'
+alias l='ls -CF'
+alias ack-grep='ack-grep --pager="less -RFX"'
+alias ack='ack-grep'
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -75,6 +77,9 @@ fi
 
 # Comment in the above and uncomment this below for a color prompt
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+export GIT_PS1_SHOWDIRTYSTATE=true
+export GIT_PS1_SHOWCOLORHINTS=true
+export GIT_PS1_UNTRACKEDFILES=true
 PS1="\[\033[1;32m\][\$(date +%H:%M)]\[\033[0;36m\][\u@\[\033[0;31m\]\h:\[\033[1;34m\]\w]\[\033[0m\] "
 
 export PATH=$PATH:~/bin
@@ -101,3 +106,14 @@ shopt -s cdspell
 #    vim -R -c 'set ft=man nomod nolist' -c 'map q :q<CR>' \
 #    -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
 #    -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
+alias tmux='tmux attach || tmux new'
+export GREP_OPTIONS="--color"
+
+export CC="colorgcc"
+
+# enable color on less
+# http://superuser.com/questions/117841/get-colors-in-less-command
+export LESSCOLORIZER=pygmentize
+export LESS='-R'
+export LESSOPEN='|~/.lessfilter %s'
+
