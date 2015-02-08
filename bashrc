@@ -76,25 +76,24 @@ if [ -f /etc/bash_completion ]; then
 fi
 
 # Comment in the above and uncomment this below for a color prompt
-PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+#PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 export GIT_PS1_SHOWDIRTYSTATE=true
 export GIT_PS1_SHOWCOLORHINTS=true
 export GIT_PS1_UNTRACKEDFILES=true
-PS1="\[\033[1;32m\][\$(date +%H:%M)]\[\033[0;36m\][\u@\[\033[0;31m\]\h:\[\033[1;34m\]\w]\[\033[0m\] "
+export PS1="\[\033[1;32m\][\$(date +%H:%M)]\[\033[0;36m\][\u@\[\033[0;31m\]\h:\[\033[01;33m\]"'$(__git_ps1)'" \[\033[1;34m\]\w]\[\033[0m\] "
 
 export PATH=$PATH:~/bin
 
 export EDITOR=vim
 
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}$HOME/lib:$HOME/Downloads/SiftGPU/bin:$HOME/cuda/lib64:
-export PATH=$HOME/bin:$HOME/cuda/bin:$PATH:$HOME/matlab/bin
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$HOME/lib:/bin:/usr/local/cuda/lib64:/usr/local/lib
+export PATH=$HOME/bin:$PATH:$HOME/matlab/bin:/usr/local/cuda/bin
 export PKG_CONFIG_PATH=$HOME/lib/pkgconfig/
-export CFLAGS="-I$HOME/include -I$HOME/cuda/include "
-export CPPFLAGS="-I$HOME/include -I$HOME/cuda/include"
-export LDFLAGS="-L$HOME/lib -L$HOME/cuda/lib64"
+export CFLAGS="-I$HOME/include"
+export CPPFLAGS="-I$HOME/include"
+export LDFLAGS="-L$HOME/lib"
 export PKG_CONFIG_PATH=$HOME/lib/pkgconfig
 
-lesspipe
 # https://www.gnu.org/software/bash/manual/bashref.html#The-Shopt-Builtin
 # No need to use cd anymore: just type the directory!
 shopt -s autocd
@@ -117,3 +116,10 @@ export LESSCOLORIZER=pygmentize
 export LESS='-R'
 export LESSOPEN='|~/.lessfilter %s'
 
+# color man http://nion.modprobe.de/blog/archives/569-colored-manpages.html
+ #alias man="TERMINFO=~/.terminfo/ LESS=C TERM=mostlike PAGER=less man"
+ # Use colors for less, man, etc.
+# http://www.cyberciti.biz/faq/unix-linux-color-man-pages-configuration/
+ [[ -f ~/.LESS_TERMCAP ]] && . ~/.LESS_TERMCAP
+ eval "$(lessfile)"
+ . ~/bin/cdlast.sh
