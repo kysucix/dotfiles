@@ -1,7 +1,7 @@
 " vimrc 
 " Maintainer:   Silvano Galliani aka kysucix <kysucix@dyne.org>
 " First Change:  end 2000
-" Last Change:  2012 Nov 29
+" Last Change:  2014 Jul
 " Usage: copy it to
 "     for Unix and OS/2:  ~/.vimrc
 "         for Amiga:  s:.vimrc
@@ -29,19 +29,37 @@ call vundle#rc()
  "
  " original repos on github
 Bundle 'Valloric/YouCompleteMe'
+Bundle 'Valloric/ListToggle'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'vimoutliner/vimoutliner'
 Bundle 'majutsushi/tagbar'
 Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdtree'
 Bundle 'tomasr/molokai'
-"Bundle 'tpope/vim-fugitive'
-"Bundle 'Lokaltog/vim-easymotion'
-"Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-"Bundle 'tpope/vim-rails.git'
-" vim-scripts repos
-"Bundle 'L9'
-"Bundle 'FuzzyFinder'
+
+" Sumblimetext-like multiedit
+Bundle "hlissner/vim-multiedit" 
+
+Bundle 'nanotech/jellybeans.vim'
+
+Bundle 'mileszs/ack.vim'
+Bundle 'kien/ctrlp.vim'
+
+" Better status line
+"Bundle 'bling/vim-airline'
+
+" I will give it a try, I don't know if it's useful
+Bundle 'Lokaltog/vim-easymotion'
+
+Bundle 'tpope/vim-unimpaired'
+Bundle 'tpope/vim-fugitive'
+Bundle 'yegappan/mru'
+Bundle 'kien/rainbow_parentheses.vim'
+Bundle 'tpope/vim-surround'
+"Plugin 'nathanaelkane/vim-indent-guides'
+Bundle 'Mizuchi/STL-Syntax'
+
+
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
 Bundle 'git://git.code.sf.net/p/vim-latex/vim-latex'
@@ -104,12 +122,13 @@ setlocal comments-=://
     set ruler       " show the cursor position all the time
     " Height of the command bar
     set cmdheight=2
-    set cursorline
+    set cursorline " Highlight the screen line of the cursor with CursorLine
     "	highlight cursorline guibg=#cccccc " highlight the cursor line
     "	highlight CursorColumn guibg=#cccccc "highlight the cursor line
     set cmdheight=1 " Number of screen lines to use for the command-line.
     set lazyredraw " do not redraw while running macros (much faster)
     set magic " For regular expressions turn magic on
+    set gdefault " When on, the ":substitute" flag 'g' is default on.
     set backspace=indent,eol,start " allow backspacing over everything in insert mode
     set whichwrap+=<,>,h,l  " backspace and cursor keys wrap to
     set showcmd     " display incomplete commands down to the bottom
@@ -336,8 +355,6 @@ let g:netrw_browse_split =3
     " makes CTRL-q quit.
     nnoremap <C-q> :q<CR>
 
-    map <leader>q :q<cr>
-
     " remap jj to esc
     imap jj <Esc>
 
@@ -441,39 +458,10 @@ endfunction
 command! -nargs=1 Bs :call BufSel("<args>")
 
 :nnoremap <F5> :buffers<CR>:buffer<Space>
-
-let g:clang_library_path="/usr/lib/"
-let g:clang_user_options="-I/home/gsilvano/include/"
-
-let g:clang_use_library=1
-let g:clang_snippets=1
-let g:clang_snippets_engine="clang_complete"
-" Avoid freezing on offending code via http://blog.msoares.pro.br/archives/quick-recipe-to-enable-clang_complete-on-vim
-let g:clang_user_options='|| exit 0'
-let g:clang_close_preview=1
-
-" Tips via https://vtluug.org/wiki/Clang_Complete
-" if there's an error, allow us to see it
-let g:clang_complete_copen=1
-let g:clang_complete_macros=1
-let g:clang_complete_patterns=0
-" Limit memory use
-let g:clang_memory_percent=70
-" Remove -std=c++11 if you don't use C++ for everything like I do.
-"let g:clang_user_options=' -std=c++11 || exit 0'
-" Set this to 0 if you don't want autoselect, 1 if you want autohighlight,
-" and 2 if you want autoselect. 0 will make you arrow down to select the first
-" option, 1 will select the first option for you, but won't insert it unless you
-" press enter. 2 will automatically insert what it thinks is right. 1 is the most
-" convenient IMO, and it defaults to 0.
-let g:clang_auto_select=1
+:nnoremap <F9> :make<CR>
 
 set conceallevel=2
 set concealcursor=vin
-let g:clang_snippets=1
-let g:clang_conceal_snippets=1
-" The single one that works with clang_complete
-let g:clang_snippets_engine='clang_complete'
 
 "When using GUI Vim, you can display the tags defined in the current file in a
 "menu named "Tags". By default, this feature is turned off. To turn on this
@@ -482,5 +470,33 @@ let Tlist_Show_Menu = 1
 
 let g:fsnonewfiles = 1
 
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+:set spell spelllang=en_us
 "let g:ycm_global_ycm_extra_conf = '/home/gsilvano/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+"https://coderwall.com/p/zneomg
+" Syntastic
+let g:syntastic_error_symbol = '✗✗'
+let g:syntastic_style_error_symbol = '✠✠'
+let g:syntastic_warning_symbol = '∆∆'
+let g:syntastic_style_warning_symbol = '≈≈'
+
+set spell spelllang=en_us
+
+" settings for https://kien.github.io/ctrlp.vim/
+let g:ctrlp_cmd = 'CtrlPMixed'
+
+" via https://github.com/skwp/dotfiles/blob/master/vim/settings/ctrlp.vim
+if exists("g:ctrlp_user_command")
+    unlet g:ctrlp_user_command
+endif
+if executable('ag')
+    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+    let g:ctrlp_user_command =
+        \ 'ag %s --files-with-matches -g "" --ignore "\tmp$|\.git$\|\.hg$\|\.svn$"'
+    " ag is fast enough that CtrlP doesn't need to cache
+    let g:ctrlp_use_caching = 0
+else
+    " Fall back to using git ls-files if Ag is not available
+    let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
+    let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
+endif
