@@ -1,4 +1,4 @@
-" vimrc 
+" vimrc
 " Maintainer:   Silvano Galliani aka kysucix <kysucix@dyne.org>
 " First Change:  end 2000
 " Last Change:  2014 Jul
@@ -9,7 +9,7 @@
 "         for OpenVMS:  sys$login:.vimrc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " To be more clear I've (almost) always used verbose version of option name (not the compact
-" one). 
+" one).
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -22,7 +22,7 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
  " let Vundle manage Vundle
- " required! 
+ " required!
  Bundle 'gmarik/vundle'
 
  " My Bundles here:
@@ -38,7 +38,9 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'tomasr/molokai'
 
 " Sumblimetext-like multiedit
-Bundle "hlissner/vim-multiedit" 
+Bundle "terryma/vim-multiple-cursors"
+
+Bundle "bronson/vim-trailing-whitespace"
 
 Bundle 'nanotech/jellybeans.vim'
 
@@ -56,7 +58,8 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'yegappan/mru'
 Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'tpope/vim-surround'
-"Plugin 'nathanaelkane/vim-indent-guides'
+Bundle 'bling/vim-airline'
+"Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'Mizuchi/STL-Syntax'
 
 
@@ -65,7 +68,7 @@ Bundle 'Mizuchi/STL-Syntax'
 Bundle 'git://git.code.sf.net/p/vim-latex/vim-latex'
 syntax on
 filetype plugin indent on
-" Force loading of new documentation 
+" Force loading of new documentation
 "Helptags()
 
 runtime vimrc_example.vim  " needed to jump back to last known position in the file
@@ -82,7 +85,7 @@ set history=1000      " keep 1000 lines of command line history
 set cf " Read the error file and jump to the first error
 set clipboard+=unnamed " yank and copy to X clipboard! :)
 set viminfo=%,:20,<20,@20,/20,'50,\"100,n~/.vim/viminfo " the viminfo file is read upon startup and written when exiting Vim
-"	set iskeyword+=-,$,@ " none of these should be word dividers, so make them not be 
+"	set iskeyword+=-,$,@ " none of these should be word dividers, so make them not be
 set iskeyword-=- " minus should not be a word divider
 set confirm " if you :q with changes it asks you if you want to continue or not
 set ttimeoutlen=100 " 100 milliseconds for escape timeout instead of 1000
@@ -136,7 +139,7 @@ setlocal comments-=://
     set mousemodel=popup          " right mouse button pops up a menu in the GUI
     let &guicursor = &guicursor . ",a:blinkon0"
     "	set hidden " Lets you change buffer without saving ;)
-    set fillchars=vert:\ ,stl:\ ,stlnc:\ " select splitter rendering 
+    set fillchars=vert:\ ,stl:\ ,stlnc:\ " select splitter rendering
     set clipboard+=unnamed " share clipboard with windows clipboard
     "	set shortmess=atl
     set shortmess+=filmnrxoOtT " abbrev. of messages (avoids 'hit enter')
@@ -160,7 +163,7 @@ set novisualbell " visual is way too flashy!
 if has('statusline')
     set laststatus=2
     " Broken down into easily includeable segments
-    set statusline=%<%f\ 
+    set statusline=%<%f\
     set statusline+=%w%h%m%r " Options
     "	    set statusline+=%{fugitive#statusline()} " Git Hotness
     "	    set statusline+=\ [%{&ff}/%Y] " filetype
@@ -287,14 +290,14 @@ let g:netrw_browse_split =3
 "    autocmd! BufRead,BufNewFile *.m,*.oct set filetype=octave
 "    augroup END
 " } END
- 
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "					 MAP                                                    "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " { START
     " change the mapleader from \ to ,
-    let mapleader = "," " 
+    let mapleader = "," "
     let g:mapleader = ","
 
     " This saves a looot of time
@@ -385,11 +388,11 @@ let g:netrw_browse_split =3
         map <leader>to :tabonly<cr>
         map <leader>tc :tabclose<cr>
         map <leader>tm :tabmove
-        map <leader>te :tabedit 
+        map <leader>te :tabedit
 
         " Open all buffers in new tabs
-        map <leader>ts :tab sball<cr> 
-        map <leader>tb :tab sball<cr> 
+        map <leader>ts :tab sball<cr>
+        map <leader>tb :tab sball<cr>
         map <leader>t<leader> :tabnext<cr>
 
         " Useful mappings for managing and windows
@@ -407,7 +410,7 @@ let g:netrw_browse_split =3
         "	map <C-w> :tabclose<cr>
         "	imap <C-w> <ESC>:tabclose<cr>
     " } END
-    
+
     " Switch automatically from c source to its header file
     nmap ,s :FSHere<CR>
 
@@ -422,7 +425,7 @@ let g:netrw_browse_split =3
 
 
 
-let g:miniBufExplMapCTabSwitchBufs = 1 
+let g:miniBufExplMapCTabSwitchBufs = 1
 
 
 
