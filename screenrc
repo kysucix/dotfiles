@@ -19,7 +19,7 @@ vbell off
 shelltitle '\] |bash'
 
 # http://superuser.com/questions/291907/using-screenrc-how-can-i-make-c-a-c-open-a-new-window-at-the-current-windows
-bind c stuff "screen -X chdir \$PWD; screen^M"
+#bind c stuff "screen -X chdir \$PWD; screen^M"
 
 # http://www.linuxquestions.org/questions/linux-general-1/screen-screenrc-how-to-use-the-right-ctrl-arrow-to-go-left-and-right-in-windows-764511/
 # for shift UP and DOWN arrows
