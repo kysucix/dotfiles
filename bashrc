@@ -123,3 +123,7 @@ export LESSOPEN='|~/.lessfilter %s'
  [[ -f ~/.LESS_TERMCAP ]] && . ~/.LESS_TERMCAP
  eval "$(lessfile)"
  . ~/bin/cdlast.sh
+
+ if [[ TERM=="xterm" && COLORTERM==gnome* ]]; then
+  export TERM="xterm-256color"
+fi
