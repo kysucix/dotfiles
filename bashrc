@@ -86,7 +86,7 @@ export PATH=$PATH:~/bin
 
 export EDITOR=vim
 
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$HOME/lib:/bin:/usr/local/cuda/lib64:/usr/local/lib
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$HOME/lib:/bin:/usr/local/cuda/lib64:/usr/local/lib:$HOME/src/caffe/build/install/lib/
 export PATH=$HOME/bin:$PATH:$HOME/matlab/bin:/usr/local/cuda/bin
 export PKG_CONFIG_PATH=$HOME/lib/pkgconfig/
 export CFLAGS="-I$HOME/include"
@@ -108,7 +108,9 @@ shopt -s cdspell
 alias tmux='tmux attach || tmux new'
 export GREP_OPTIONS="--color"
 
-export CC="colorgcc"
+# No more colorgcc, I rely on gcc4.9 now
+#export CC="colorgcc"
+#export CXX="color-g++"
 
 # enable color on less
 # http://superuser.com/questions/117841/get-colors-in-less-command
