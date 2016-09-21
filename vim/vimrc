@@ -48,7 +48,7 @@ Bundle 'mileszs/ack.vim'
 Bundle 'kien/ctrlp.vim'
 
 " Better status line
-"Bundle 'bling/vim-airline'
+Bundle 'bling/vim-airline'
 
 " I will give it a try, I don't know if it's useful
 Bundle 'Lokaltog/vim-easymotion'
@@ -58,14 +58,30 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'yegappan/mru'
 Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'tpope/vim-surround'
-Bundle 'bling/vim-airline'
 "Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'Mizuchi/STL-Syntax'
+Bundle 'uarun/vim-protobuf'
+"Bundle 'fatih/vim-go'
+"Bundle 'davidhalter/jedi-vim'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'bling/vim-bufferline'
+Bundle 'lervag/vimtex'
+Bundle 'rhysd/vim-clang-format'
+Plugin 'tmhedberg/SimpylFold'
+" Python plugins
+Bundle 'klen/python-mode'
+Bundle 'vim-scripts/indentpython.vim'
+Bundle 'rdnetto/YCM-Generator'
+Bundle 'jeaye/color_coded'
+"Bundle 'Yggdroot/indentLine'
+"Bundle 'unblevable/quick-scope'
+
+"Plugin 'jnurmine/Zenburn'
 
 
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
-Bundle 'git://git.code.sf.net/p/vim-latex/vim-latex'
+"Bundle 'git://git.code.sf.net/p/vim-latex/vim-latex'
 syntax on
 filetype plugin indent on
 " Force loading of new documentation
@@ -88,7 +104,7 @@ set viminfo=%,:20,<20,@20,/20,'50,\"100,n~/.vim/viminfo " the viminfo file is re
 "	set iskeyword+=-,$,@ " none of these should be word dividers, so make them not be
 set iskeyword-=- " minus should not be a word divider
 set confirm " if you :q with changes it asks you if you want to continue or not
-set ttimeoutlen=100 " 100 milliseconds for escape timeout instead of 1000
+set ttimeoutlen=1000 " 100 milliseconds for escape timeout instead of 1000
 
 let g:tex_flavor='latex'
 
@@ -195,7 +211,7 @@ set nolist " Show tabs as CTRL-I, show end of line with $
 set verbose=0 " When bigger than zero, Vim will give messages about what it is doing.
 set updatecount=200  " write swap file to disk after each 200 characters
 set updatetime=5000  " write swap file to disk after 5 inactive seconds
-set gdefault " Adds g to every substitute command
+"set gdefault " Adds g to every substitute command
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "					 FOLDING                                                 "
@@ -302,6 +318,16 @@ let g:netrw_browse_split =3
 
     " This saves a looot of time
     nnoremap ; :
+
+    "split navigations
+    nnoremap <C-J> <C-W><C-J>
+    nnoremap <C-K> <C-W><C-K>
+    nnoremap <C-L> <C-W><C-L>
+    nnoremap <C-H> <C-W><C-H>
+
+
+    " Enable folding with the spacebar
+    nnoremap <space> za
 
     " f7 toggles spelling on/off
     nnoremap <F7> :setlocal spell! spell?<CR>
@@ -418,7 +444,7 @@ let g:netrw_browse_split =3
     nmap <F8> :TagbarToggle<CR>
 
     "F12 compile and open error window
-    command -nargs=* Make make <args> | cwindow 3
+    command! -nargs=* Make make <args> | cwindow 6
     nmap <F12> :Make<CR>|
 
 " } END
@@ -426,8 +452,6 @@ let g:netrw_browse_split =3
 
 
 let g:miniBufExplMapCTabSwitchBufs = 1
-
-
 
 function! BufSel(pattern)
   let bufcount = bufnr("$")
@@ -461,7 +485,6 @@ endfunction
 command! -nargs=1 Bs :call BufSel("<args>")
 
 :nnoremap <F5> :buffers<CR>:buffer<Space>
-:nnoremap <F9> :make<CR>
 
 set conceallevel=2
 set concealcursor=vin
@@ -473,36 +496,71 @@ let Tlist_Show_Menu = 1
 
 let g:fsnonewfiles = 1
 
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
-:set spell spelllang=en_us
-"let g:ycm_global_ycm_extra_conf = '/home/gsilvano/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
 "https://coderwall.com/p/zneomg
-" Syntastic
-let g:syntastic_error_symbol = '✗✗'
-let g:syntastic_style_error_symbol = '✠✠'
-let g:syntastic_warning_symbol = '∆∆'
-let g:syntastic_style_warning_symbol = '≈≈'
+" Syntastic {
+    let g:syntastic_error_symbol = '✗✗'
+    let g:syntastic_style_error_symbol = '✠✠'
+    let g:syntastic_warning_symbol = '∆∆'
+    let g:syntastic_style_warning_symbol = '≈≈'
+    let g:syntastic_python_checkers = ['python']
+" }
 
-set spell spelllang=en_us
 
+" ctrl-p {
 " settings for https://kien.github.io/ctrlp.vim/
-let g:ctrlp_cmd = 'CtrlPMixed'
+    let g:ctrlp_cmd = 'CtrlPMixed'
 
-" via https://github.com/skwp/dotfiles/blob/master/vim/settings/ctrlp.vim
-if exists("g:ctrlp_user_command")
-    unlet g:ctrlp_user_command
-endif
-if executable('ag')
-    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-    let g:ctrlp_user_command =
-        \ 'ag %s --files-with-matches -g "" --ignore "\tmp$|\.git$\|\.hg$\|\.svn$"'
-    " ag is fast enough that CtrlP doesn't need to cache
-    let g:ctrlp_use_caching = 0
-else
-    " Fall back to using git ls-files if Ag is not available
-    let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
-    let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
-endif
+    " via https://github.com/skwp/dotfiles/blob/master/vim/settings/ctrlp.vim
+    if exists("g:ctrlp_user_command")
+        unlet g:ctrlp_user_command
+    endif
+    if executable('ag')
+        " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+        let g:ctrlp_user_command =
+            \ 'ag %s --files-with-matches -g "" --ignore "\tmp$|\.git$\|\.hg$\|\.svn$"'
+        " ag is fast enough that CtrlP doesn't need to cache
+        let g:ctrlp_use_caching = 0
+    else
+        " Fall back to using git ls-files if Ag is not available
+        let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
+        let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
+    endif
+" }
 
-set spell
-set spelllang=en_us
+" https://stackoverflow.com/questions/21743323/youcompleteme-freezes-when-used-with-python-mode
+" python-mode {
+    let g:pymode_rope_complete_on_dot = 0
+    let g:pymode_rope_completion = 0
+    "let g:pymode_rope = 0
+    let g:pymode_rope_lookup_project = 0
+    "let g:pymode_lint_write = 0
+" }
+
+" jedi-vim {
+        "let g:jedi#auto_vim_configuration = 0
+        "let g:jedi#popup_on_dot = 0
+        "let g:jedi#popup_select_first = 0
+        "let g:jedi#completions_enabled = 1
+        "let g:jedi#completions_command = ""
+        "let g:jedi#show_call_signatures = "1"
+        "let g:jedi#goto_assignments_command = "<leader>pa"
+        "let g:jedi#goto_definitions_command = "<leader>pd"
+        "let g:jedi#documentation_command = "<leader>pk"
+        "let g:jedi#usages_command = "<leader>pu"
+        "let g:jedi#rename_command = "<leader>pr"
+" }
+" YouCompleteMe {
+    map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+    let g:ycm_confirm_extra_conf=0
+    let g:ycm_autoclose_preview_window_after_completion=1
+    "let g:ycm_filetype_specific_completion_to_disable = { 'python' : 1 }
+    "let g:ycm_filetype_blacklist = { 'python' : 1 }
+    let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+    let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
+    let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
+    let g:ycm_complete_in_comments = 1 " Completion in comments
+    let g:ycm_complete_in_strings = 1 " Completion in string
+
+    "let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
+    "let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+" }
