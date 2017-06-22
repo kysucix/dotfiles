@@ -1,7 +1,7 @@
 " vimrc
 " Maintainer:   Silvano Galliani aka kysucix <kysucix@dyne.org>
 " First Change:  end 2000
-" Last Change:  2014 Jul
+" Last Change:  2017 Apr
 " Usage: copy it to
 "     for Unix and OS/2:  ~/.vimrc
 "         for Amiga:  s:.vimrc
@@ -18,12 +18,12 @@
 set nocompatible " Not compatibile with old vi
 filetype off
 " Configure plugins with vundle
-set rtp+=~/.vim/bundle/vundle/
+set runtimepath+=~/.vim/bundle/vundle/
 call vundle#rc()
 
  " let Vundle manage Vundle
  " required!
- Bundle 'gmarik/vundle'
+Bundle 'gmarik/vundle'
 
  " My Bundles here:
  "
@@ -66,6 +66,7 @@ Bundle 'uarun/vim-protobuf'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'bling/vim-bufferline'
 Bundle 'lervag/vimtex'
+"Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'rhysd/vim-clang-format'
 Plugin 'tmhedberg/SimpylFold'
 " Python plugins
@@ -73,6 +74,14 @@ Bundle 'klen/python-mode'
 Bundle 'vim-scripts/indentpython.vim'
 Bundle 'rdnetto/YCM-Generator'
 Bundle 'jeaye/color_coded'
+Bundle 'dhruvasagar/vim-markify'
+Bundle 'cocopon/iceberg.vim'
+Bundle 'junegunn/vim-easy-align'
+
+Bundle 'colepeters/fira-for-powerline'
+Bundle 'ludovicchabant/vim-gutentags'
+"Bundle 'xuhdev/vim-latex-live-preview'
+"Bundle 'machakann/vim-sandwich'
 "Bundle 'Yggdroot/indentLine'
 "Bundle 'unblevable/quick-scope'
 
@@ -99,7 +108,7 @@ if version >= 600 " Stuff which is only possible in vim 6..
 endif
 set history=1000      " keep 1000 lines of command line history
 set cf " Read the error file and jump to the first error
-set clipboard+=unnamed " yank and copy to X clipboard! :)
+"set clipboard=unnamedplus " yank and copy to X clipboard! :)
 set viminfo=%,:20,<20,@20,/20,'50,\"100,n~/.vim/viminfo " the viminfo file is read upon startup and written when exiting Vim
 "	set iskeyword+=-,$,@ " none of these should be word dividers, so make them not be
 set iskeyword-=- " minus should not be a word divider
@@ -120,6 +129,7 @@ set background=dark
 "colors default
 "	colors desert
 "	colorscheme solarized
+colorscheme molokai
 "colors elflord
 "colors evening
 "colors koehler
@@ -156,7 +166,8 @@ setlocal comments-=://
     let &guicursor = &guicursor . ",a:blinkon0"
     "	set hidden " Lets you change buffer without saving ;)
     set fillchars=vert:\ ,stl:\ ,stlnc:\ " select splitter rendering
-    set clipboard+=unnamed " share clipboard with windows clipboard
+    set clipboard=exclude:.*
+    "set clipboard+=unnamed " share clipboard with windows clipboard
     "	set shortmess=atl
     set shortmess+=filmnrxoOtT " abbrev. of messages (avoids 'hit enter')
     let g:netrw_silent = 1
@@ -319,18 +330,11 @@ let g:netrw_browse_split =3
     " This saves a looot of time
     nnoremap ; :
 
-    "split navigations
-    nnoremap <C-J> <C-W><C-J>
-    nnoremap <C-K> <C-W><C-K>
-    nnoremap <C-L> <C-W><C-L>
-    nnoremap <C-H> <C-W><C-H>
-
-
     " Enable folding with the spacebar
     nnoremap <space> za
 
     " f7 toggles spelling on/off
-    nnoremap <F7> :setlocal spell! spell?<CR>
+    "nnoremap <F7> :setlocal spell! spell?<CR>
 
     " With the following in your vimrc, you can press Tab to return to normal mode:
     " http://vim.wikia.com/wiki/Avoid_the_escape_key#Using_the_Tab_key
@@ -449,6 +453,9 @@ let g:netrw_browse_split =3
 
 " } END
 
+" Put quickfix window always to the bottom
+" from https://github.com/fatih/vim-go/issues/108
+autocmd FileType qf wincmd J
 
 
 let g:miniBufExplMapCTabSwitchBufs = 1
@@ -530,9 +537,10 @@ let g:fsnonewfiles = 1
 " https://stackoverflow.com/questions/21743323/youcompleteme-freezes-when-used-with-python-mode
 " python-mode {
     let g:pymode_rope_complete_on_dot = 0
-    let g:pymode_rope_completion = 0
+    let g:pymode_rope_completion = 1
     "let g:pymode_rope = 0
     let g:pymode_rope_lookup_project = 0
+    let g:pymode_options_max_line_length = 512
     "let g:pymode_lint_write = 0
 " }
 
@@ -560,7 +568,27 @@ let g:fsnonewfiles = 1
     let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
     let g:ycm_complete_in_comments = 1 " Completion in comments
     let g:ycm_complete_in_strings = 1 " Completion in string
-
+    " Apply YCM FixIt
+    let g:ycm_filetype_blacklist = { 'latex': 1 }
     "let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
     "let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
 " }
+"
+
+nmap <C-V> "+gP
+imap <C-V> <ESC><C-V>i
+vmap <C-C> "+y
+set showbreak=↪
+
+let g:clang_format#style_options = {
+            \ "AccessModifierOffset" : -4,
+            \ "AllowShortIfStatementsOnASingleLine" : "true",
+            \ "AlwaysBreakTemplateDeclarations" : "true",
+            \ "Standard" : "C++11"}
+
+" map to <Leader>cf in C++ code
+autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+" if you install vim-operator-user
+autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
+
