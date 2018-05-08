@@ -10,11 +10,14 @@ Only vim has its personal configuration directory.
 1. Set up [Vundle]:
 
    ```
-   $ git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
    ```
 3. Install configured bundles:
 
 Launch `vim`, run `:BundleInstall` 
-(or `vim +BundleInstall +qall` for CLI lovers)
+or for CLI lovers:
+   ```
+   vim +BundleInstall +qall` for CLI lovers)
+   ```
 
 Enjoy! :)

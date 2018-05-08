@@ -18,7 +18,7 @@
 set nocompatible " Not compatibile with old vi
 filetype off
 " Configure plugins with vundle
-set runtimepath+=~/.vim/bundle/vundle/
+set runtimepath+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
 
  " let Vundle manage Vundle
