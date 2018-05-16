@@ -15,7 +15,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "					 GENERAL                                                "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nocompatible " Not compatibile with old vi
+"set nocompatible " Not compatibile with old vi " Deprecated: https://www.reddit.com/r/vim/wiki/vimrctips
 filetype off
 " Configure plugins with vundle
 set runtimepath+=~/.vim/bundle/Vundle.vim
@@ -152,8 +152,6 @@ setlocal comments-=://
     " Height of the command bar
     set cmdheight=2
     set cursorline " Highlight the screen line of the cursor with CursorLine
-    "	highlight cursorline guibg=#cccccc " highlight the cursor line
-    "	highlight CursorColumn guibg=#cccccc "highlight the cursor line
     set cmdheight=1 " Number of screen lines to use for the command-line.
     set lazyredraw " do not redraw while running macros (much faster)
     set magic " For regular expressions turn magic on
@@ -177,7 +175,7 @@ setlocal comments-=://
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set showmatch " When a bracket is inserted, briefly jump to the matching one.
 set matchtime=5 " How many tenths of a second to blink when matching brackets
-set smartindent " braces affect autoindentation
+" set smartindent " braces affect autoindentation DEPRECATED OPTION:https://www.reddit.com/r/vim/wiki/vimrctips#wiki_do_not_use_smartindent 
 set cinkeys +=; " figure out indent when ; is pressed
 set shiftround " < and > will hit indentation levels instead of always -4/+4
 set scrolloff=4 " Minimal number of screen lines to keep above and below the cursor.
@@ -202,7 +200,7 @@ endif
 
 "set smarttab "When on, a <Tab> in front of a line inserts blanks according to
 " shiftwidth'.  'tabstop' is used in other places.
-set shiftwidth=4 " Number of spaces to use for each step of (auto)indent.
+"set shiftwidth=4 " Number of spaces to use for each step of (auto)indent.
 "set softtabstop=4 " Number of spaces that a <Tab> counts for while performing editing  operations,like inserting a <Tab> or using <BS>.
 "set tabstop=4 "Number of spaces that a <Tab> in the file counts for. (Bad 4 Makefiles!)
 " set expandtab
@@ -309,18 +307,18 @@ let g:netrw_browse_split =3
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"					 AUTOCOMMAND                                            "
+"					 AUTOCOMMAND                        "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" { START
-" Octave syntax for any *.m program
-"    augroup filetypedetect
-"    autocmd! BufRead,BufNewFile *.m,*.oct set filetype=octave
-"    augroup END
-" } END
+" map to <Leader>cf in C++ code
+autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+" if you install vim-operator-user
+autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
 
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"					 MAP                                                    "
+"					 MAP                                "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " { START
     " change the mapleader from \ to ,
@@ -585,10 +583,4 @@ let g:clang_format#style_options = {
             \ "AllowShortIfStatementsOnASingleLine" : "true",
             \ "AlwaysBreakTemplateDeclarations" : "true",
             \ "Standard" : "C++11"}
-
-" map to <Leader>cf in C++ code
-autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
-autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
-" if you install vim-operator-user
-autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
 
